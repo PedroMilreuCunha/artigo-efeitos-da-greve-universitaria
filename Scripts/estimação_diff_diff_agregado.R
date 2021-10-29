@@ -17,7 +17,7 @@ library(cowplot)
 
 # Configurando o tema dos gráficos ----
 
-theme_new <- function(base_size = 8) {
+theme_new <- function(base_size = 10) {
   theme_bw(base_size = base_size) %+replace%
     theme(
       plot.title = element_text(size = rel(1), face = "bold", margin = margin(5,0,5,0), hjust = 0),
@@ -48,7 +48,7 @@ grafico_densidade_notas <- ggplot(painel_federal_estadual, aes(x = nota_media, f
                            geom_density(alpha = 0.4) +
                            labs(x = "Mean score", y = "Density", fill = "Group")+
                            scale_fill_manual(labels=c("Control", "Treatment"),
-                                             values = c("red","navy")) +
+                                             values = c("grey", "black")) +
                            theme(panel.grid = element_blank())
 #ggsave(filename = "Figuras/grafico_densidade_notas.png")
 
@@ -58,7 +58,7 @@ grafico_densidade_log_notas <- ggplot(painel_federal_estadual, aes(x = log_nota,
                                geom_density(alpha = 0.4) +
                                labs(x = "ln(Mean score)", y = "Density", fill = "Group")+
                                scale_fill_manual(labels=c("Control", "Treatment"),
-                                                 values = c("red","navy")) +
+                                                 values = c("grey", "black")) +
                                theme(panel.grid = element_blank())
 
 #ggsave(filename = "Figuras/grafico_densidade_log_notas.png")
@@ -89,7 +89,7 @@ tendencias <- ggplot(painel_federal_estadual, aes(Ano, log_nota, color = Tratame
               labs(x = "Year", y = "ln(Mean score)", color = "Group")+
               geom_vline(xintercept = 2012, linetype = "dashed", col = "black", size = 0.5) +
               scale_colour_manual(labels=c("Control", "Treatment"),
-                                  values = c("red","navy"))+
+                                  values = c("grey", "black"))+
               theme(panel.grid = element_blank())
 
 #ggsave(file = "Figuras/tendencias.eps")
@@ -117,7 +117,7 @@ grafico_suporte_comum_2009_2012 <- ggplot(painel_federal_estadual_2009_2012,
                                         y = "Density", 
                                         fill = "Group") +
                                    scale_fill_manual(labels=c("Control", "Treatment"),
-                                                     values = c("red","navy")) +
+                                                     values = c("grey", "black")) +
                                    theme(panel.grid = element_blank())
 
 #ggsave(file = "Figuras/suporte_comum_2009_2012.png")
@@ -141,7 +141,7 @@ grafico_suporte_comum_2009_2012_quantil <- ggplot(subset(painel_federal_estadual
                                                 y = "Density", 
                                                 fill = "Group")+
                                            scale_fill_manual(labels = c("Control", "Treatment"),
-                                                             values = c("red","navy")) +
+                                                             values = c("grey", "black")) +
                                            facet_grid(quantil ~ .) +
                                            theme(panel.grid = element_blank())
 
@@ -193,7 +193,7 @@ g1_2009_2012 <- love.plot(W1, stats = c("m"), drop.distance = TRUE,
                           title = NULL,
                           subtitle = "Amostra", line= T,
                           var.names = names,
-                          colors = c("red","navy"),
+                          colors = c("grey", "black"),
                           shapes = c("triangle filled", "circle filled"))
 
 #### 4.2) Criação dos pesos utilizando o modelo de entropia #----
@@ -228,7 +228,7 @@ g2_2009_2012 <- love.plot(W2, stats = c("m"), drop.distance = TRUE,
                           title = NULL,
                           subtitle = "Amostra", line= T,
                           var.names = names,
-                          colors = c("red","navy"),
+                          colors = c("grey", "black"),
                           shapes = c("triangle filled", "circle filled"))
 
 b2_placebo = bal.tab(W2_placebo, un = TRUE,
@@ -244,7 +244,7 @@ g3_2009_2012 <- love.plot(W2_placebo, stats = c("m"), drop.distance = TRUE,
                           title = NULL,
                           subtitle = "Amostra", line= T,
                           var.names = names_placebo,
-                          colors = c("red","navy"),
+                          colors = c("grey", "black"),
                           shapes = c("triangle filled", "circle filled"))
 
 
@@ -350,7 +350,7 @@ grafico_suporte_comum_2010_2013 <- ggplot(painel_federal_estadual_2010_2013,
                                         y = "Density", 
                                         fill = "Group") +
                                    scale_fill_manual(labels=c("Control", "Treatment"),
-                                                     values = c("red","navy")) +
+                                                     values = c("grey", "black")) +
                                    theme(panel.grid = element_blank())
 
 #ggsave(file = "Figuras/suporte_comum_2010_2013.png")
@@ -374,7 +374,7 @@ grafico_suporte_comum_2010_2013_quantil <- ggplot(subset(painel_federal_estadual
                                                 y = "Density", 
                                                 fill = "Group")+
                                            scale_fill_manual(labels=c("Control", "Treatment"),
-                                                             values = c("red","navy")) +
+                                                             values = c("grey", "black")) +
                                            facet_grid(quantil ~ .) +
                                            theme(panel.grid = element_blank())
 
@@ -426,7 +426,7 @@ g1_2010_2013 <- love.plot(W1, stats = c("m"), drop.distance = TRUE,
                 title = NULL,
                 subtitle = "Amostra", line= T,
                 var.names = names,
-                colors = c("red","navy"),
+                colors = c("grey", "black"),
                 shapes = c("triangle filled", "circle filled"))
 
 #### 4.2) Criação dos pesos utilizando o modelo de entropia #----
@@ -461,7 +461,7 @@ g2_2010_2013 <- love.plot(W2, stats = c("m"), drop.distance = TRUE,
                 title = NULL,
                 subtitle = "Amostra", line= T,
                 var.names = names,
-                colors = c("red","navy"),
+                colors = c("grey", "black"),
                 shapes = c("triangle filled", "circle filled"))
 
 b2_placebo = bal.tab(W2_placebo, un = TRUE,
@@ -477,7 +477,7 @@ g3_2010_2013 <- love.plot(W2_placebo, stats = c("m"), drop.distance = TRUE,
                 title = NULL,
                 subtitle = "Amostra", line= T,
                 var.names = names_placebo,
-                colors = c("red","navy"),
+                colors = c("grey", "black"),
                 shapes = c("triangle filled", "circle filled"))
 
 
@@ -584,7 +584,7 @@ grafico_suporte_comum_2011_2014 <- ggplot(painel_federal_estadual_2011_2014,
                                         y = "Density", 
                                         fill = "Group") +
                                    scale_fill_manual(labels=c("Control", "Treatment"),
-                                                     values = c("red","navy")) +
+                                                     values = c("grey", "black")) +
                                    theme(panel.grid = element_blank())
 
 #ggsave(file = "Figuras/suporte_comum_2011_2014.png")
@@ -608,7 +608,7 @@ grafico_suporte_comum_2011_2014_quantil <- ggplot(subset(painel_federal_estadual
                                                 y = "Density", 
                                                 fill = "Group")+
                                            scale_fill_manual(labels=c("Control", "Treatment"),
-                                                             values = c("red","navy")) +
+                                                             values = c("grey", "black")) +
                                            facet_grid(quantil ~ .) +
                                            theme(panel.grid = element_blank())
 
@@ -660,7 +660,7 @@ g1_2011_2014 <- love.plot(W1, stats = c("m"), drop.distance = TRUE,
                           title = NULL,
                           subtitle = "Amostra", line= T,
                           var.names = names,
-                          colors = c("red","navy"),
+                          colors = c("grey", "black"),
                           shapes = c("triangle filled", "circle filled"))
 
 #### 4.2) Criação dos pesos utilizando o modelo de entropia #----
@@ -695,7 +695,7 @@ g2_2011_2014 <- love.plot(W2, stats = c("m"), drop.distance = TRUE,
                           title = NULL,
                           subtitle = "Amostra", line= T,
                           var.names = names,
-                          colors = c("red","navy"),
+                          colors = c("grey", "black"),
                           shapes = c("triangle filled", "circle filled"))
 
 b2_placebo = bal.tab(W2_placebo, un = TRUE,
@@ -711,7 +711,7 @@ g3_2011_2014 <- love.plot(W2_placebo, stats = c("m"), drop.distance = TRUE,
                           title = NULL,
                           subtitle = "Amostra", line= T,
                           var.names = names_placebo,
-                          colors = c("red","navy"),
+                          colors = c("grey", "black"),
                           shapes = c("triangle filled", "circle filled"))
 
 

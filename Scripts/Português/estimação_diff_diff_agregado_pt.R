@@ -17,22 +17,22 @@ library(cowplot)
 
 # Configurando o tema dos gráficos ----
 
-theme_new <- function(base_size = 8) {
+theme_new <- function(base_size = 10) {
   theme_bw(base_size = base_size) %+replace%
     theme(
       plot.title = element_text(size = rel(1), face = "bold", margin = margin(5,0,5,0), hjust = 0),
       panel.grid.minor = element_blank(),
       panel.border = element_blank(),
       axis.title = element_text(size = rel(1), face = "bold"),
-      axis.text = element_text(size = rel(1), face = "bold"),
+      axis.text = element_text(size = rel(1)),
       axis.line = element_line(color = "black", arrow = arrow(length = unit(0.3, "lines"), type = "closed")),
       legend.title = element_text(size = rel(1), face = "bold"),
-      legend.text = element_text(size = rel(1), face = "bold"),
+      legend.text = element_text(size = rel(1)),
       legend.key = element_rect(fill = "transparent", colour = NA),
       legend.key.size = unit(1.5, "lines"),
       legend.background = element_rect(fill = "transparent", colour = NA),
-      strip.background = element_rect(fill = "#17252D", color = "#17252D"),
-      strip.text = element_text(size = rel(1), face = "bold", color = "white", margin = margin(5,0,5,0))
+      strip.background = element_rect(fill = "transparent", color = NA),
+      strip.text = element_text(size = rel(1), color = "black", margin = margin(5,0,5,0))
     )
 }
 theme_set(theme_new())
@@ -48,7 +48,7 @@ grafico_densidade_notas <- ggplot(painel_federal_estadual, aes(x = nota_media, f
   geom_density(alpha = 0.4) +
   labs(x = "Nota média", y = "Densidade", fill = "Grupo")+
   scale_fill_manual(labels=c("Controle", "Tratamento"),
-                    values = c("red","navy")) +
+                    values = c("grey", "black")) +
   theme(panel.grid = element_blank())
 #ggsave(filename = "Figuras/Português/grafico_densidade_notas.png")
 
@@ -58,7 +58,7 @@ grafico_densidade_log_notas <- ggplot(painel_federal_estadual, aes(x = log_nota,
   geom_density(alpha = 0.4) +
   labs(x = "ln(Nota média)", y = "Densidade", fill = "Grupo")+
   scale_fill_manual(labels=c("Controle", "Tratamento"),
-                    values = c("red","navy")) +
+                    values = c("grey", "black")) +
   theme(panel.grid = element_blank())
 
 #ggsave(filename = "Figuras/Português/grafico_densidade_log_notas.png")
@@ -85,11 +85,11 @@ names_placebo <- data.frame(old = c("prop_casados", "prop_brancos",
 #### HIPÓTESE DAS TENDÊNCIAS PARALELAS ####
 
 tendencias <- ggplot(painel_federal_estadual, aes(Ano, log_nota, color = Tratamento))+
-  stat_summary(geom = 'line') +
+  stat_summary(geom = 'line', size = 1) +
   labs(x = "Ano", y = "ln(Nota média)", color = "Grupo")+
-  geom_vline(xintercept = 2012, linetype = "dashed", col = "black", size = 0.5) +
+  geom_vline(xintercept = 2012, linetype = "dashed", col = "black", size = 0.75) +
   scale_colour_manual(labels=c("Controle", "Tratamento"),
-                      values = c("red","navy"))+
+                      values = c("grey", "black"))+
   theme(panel.grid = element_blank())
 
 #ggsave(file = "Figuras/Português/tendencias.eps")
@@ -112,12 +112,12 @@ painel_federal_estadual_2009_2012$pscore <- predict(ps, type = "response")
 
 grafico_suporte_comum_2009_2012 <- ggplot(painel_federal_estadual_2009_2012,
                                           aes(x = pscore, fill = Tratamento))+
-                                  geom_density(alpha = 0.4) +
+                                  geom_density(alpha = 0.50) +
                                   labs(x = "Propensity score",
                                        y = "Densidade", 
                                        fill = "Grupo") +
                                   scale_fill_manual(labels=c("Controle", "Tratamento"),
-                                                    values = c("red","navy")) +
+                                                    values = c("grey","black")) +
                                   theme(panel.grid = element_blank())
 
 #ggsave(file = "Figuras/Português/suporte_comum_2009_2012.png")
@@ -141,7 +141,7 @@ grafico_suporte_comum_2009_2012_quantil <- ggplot(subset(painel_federal_estadual
                                                 y = "Densidade", 
                                                 fill = "Grupo")+
                                            scale_fill_manual(labels = c("Controle", "Tratamento"),
-                                                             values = c("red","navy")) +
+                                                             values = c("grey","black")) +
                                            facet_grid(quantil ~ .) +
                                            theme(panel.grid = element_blank())
 
@@ -193,11 +193,11 @@ g1_2009_2012 <- love.plot(W1, stats = c("m"), drop.distance = TRUE,
                           title = NULL,
                           subtitle = "Amostra", line= T,
                           var.names = names,
-                          colors = c("red","navy"),
+                          colors = c("grey", "black"),
                           shapes = c("triangle filled", "circle filled"))
 
 g1_2009_2012 <- g1_2009_2012 + 
-                scale_color_manual(name = "Amostra", values = c("red", "navy")) + 
+                scale_color_manual(name = "Amostra", values = c("grey", "black")) + 
                 scale_shape_manual(name = "Amostra", values = c("triangle filled", "circle filled")) + 
                 guides(group = FALSE, size = FALSE, stroke = FALSE) + 
                 xlab("Diferenças médias \n padronizadas")
@@ -234,11 +234,11 @@ g2_2009_2012 <- love.plot(W2, stats = c("m"), drop.distance = TRUE,
                           title = NULL,
                           subtitle = "Amostra", line= T,
                           var.names = names,
-                          colors = c("red","navy"),
+                          colors = c("grey", "black"),
                           shapes = c("triangle filled", "circle filled"))
 
 g2_2009_2012 <- g2_2009_2012 + 
-                scale_color_manual(name = "Amostra", values = c("red", "navy")) + 
+                scale_color_manual(name = "Amostra", values = c("grey", "black")) + 
                 scale_shape_manual(name = "Amostra", values = c("triangle filled", "circle filled")) + 
                 guides(group = FALSE, size = FALSE, stroke = FALSE) + 
                 xlab("Diferenças médias \n padronizadas")
@@ -256,11 +256,11 @@ g3_2009_2012 <- love.plot(W2_placebo, stats = c("m"), drop.distance = TRUE,
                           title = NULL,
                           subtitle = "Amostra", line= T,
                           var.names = names_placebo,
-                          colors = c("red","navy"),
+                          colors = c("grey", "black"),
                           shapes = c("triangle filled", "circle filled"))
 
 g3_2009_2012 <- g3_2009_2012 + 
-                scale_color_manual(name = "Amostra", values = c("red", "navy")) + 
+                scale_color_manual(name = "Amostra", values = c("grey", "black")) + 
                 scale_shape_manual(name = "Amostra", values = c("triangle filled", "circle filled")) + 
                 guides(group = FALSE, size = FALSE, stroke = FALSE) + 
                 xlab("Diferenças médias \n padronizadas")
@@ -368,7 +368,7 @@ grafico_suporte_comum_2010_2013 <- ggplot(painel_federal_estadual_2010_2013,
                                         y = "Densidade", 
                                         fill = "Grupo") +
                                    scale_fill_manual(labels=c("Controle", "Tratamento"),
-                                                     values = c("red","navy")) +
+                                                     values = c("grey", "black")) +
                                    theme(panel.grid = element_blank())
 
 #ggsave(file = "Figuras/Português/suporte_comum_2010_2013.png")
@@ -392,7 +392,7 @@ grafico_suporte_comum_2010_2013_quantil <- ggplot(subset(painel_federal_estadual
                                                 y = "Densidade", 
                                                 fill = "Grupo")+
                                            scale_fill_manual(labels=c("Controle", "Tratamento"),
-                                                             values = c("red","navy")) +
+                                                             values = c("grey", "black")) +
                                            facet_grid(quantil ~ .) +
                                            theme(panel.grid = element_blank())
 
@@ -444,11 +444,11 @@ g1_2010_2013 <- love.plot(W1, stats = c("m"), drop.distance = TRUE,
                           title = NULL,
                           subtitle = "Amostra", line= T,
                           var.names = names,
-                          colors = c("red","navy"),
+                          colors = c("grey", "black"),
                           shapes = c("triangle filled", "circle filled"))
 
 g1_2010_2013 <- g1_2010_2013 + 
-                scale_color_manual(name = "Amostra", values = c("red", "navy")) + 
+                scale_color_manual(name = "Amostra", values = c("grey", "black")) + 
                 scale_shape_manual(name = "Amostra", values = c("triangle filled", "circle filled")) + 
                 guides(group = FALSE, size = FALSE, stroke = FALSE) + 
                 xlab("Diferenças médias \n padronizadas")
@@ -485,11 +485,11 @@ g2_2010_2013 <- love.plot(W2, stats = c("m"), drop.distance = TRUE,
                           title = NULL,
                           subtitle = "Amostra", line= T,
                           var.names = names,
-                          colors = c("red","navy"),
+                          colors = c("grey", "black"),
                           shapes = c("triangle filled", "circle filled"))
 
 g2_2010_2013 <- g2_2010_2013 + 
-                scale_color_manual(name = "Amostra", values = c("red", "navy")) + 
+                scale_color_manual(name = "Amostra", values = c("grey", "black")) + 
                 scale_shape_manual(name = "Amostra", values = c("triangle filled", "circle filled")) + 
                 guides(group = FALSE, size = FALSE, stroke = FALSE) + 
                 xlab("Diferenças médias \n padronizadas")
@@ -507,11 +507,11 @@ g3_2010_2013 <- love.plot(W2_placebo, stats = c("m"), drop.distance = TRUE,
                           title = NULL,
                           subtitle = "Amostra", line= T,
                           var.names = names_placebo,
-                          colors = c("red","navy"),
+                          colors = c("grey", "black"),
                           shapes = c("triangle filled", "circle filled"))
 
 g3_2010_2013 <- g3_2010_2013 + 
-                scale_color_manual(name = "Amostra", values = c("red", "navy")) + 
+                scale_color_manual(name = "Amostra", values = c("grey", "black")) + 
                 scale_shape_manual(name = "Amostra", values = c("triangle filled", "circle filled")) + 
                 guides(group = FALSE, size = FALSE, stroke = FALSE) + 
                 xlab("Diferenças médias \n padronizadas")
@@ -619,7 +619,7 @@ grafico_suporte_comum_2011_2014 <- ggplot(painel_federal_estadual_2011_2014,
                                         y = "Densidade", 
                                         fill = "Grupo") +
                                    scale_fill_manual(labels=c("Controle", "Tratamento"),
-                                                     values = c("red","navy")) +
+                                                     values = c("grey", "black")) +
                                    theme(panel.grid = element_blank())
 
 #ggsave(file = "Figuras/Português/suporte_comum_2011_2014.png")
@@ -643,7 +643,7 @@ grafico_suporte_comum_2011_2014_quantil <- ggplot(subset(painel_federal_estadual
                                                 y = "Densidade", 
                                                 fill = "Grupo")+
                                            scale_fill_manual(labels=c("Controle", "Tratamento"),
-                                                             values = c("red","navy")) +
+                                                             values = c("grey", "black")) +
                                            facet_grid(quantil ~ .) +
                                            theme(panel.grid = element_blank())
 
@@ -695,11 +695,11 @@ g1_2011_2014 <- love.plot(W1, stats = c("m"), drop.distance = TRUE,
                           title = NULL,
                           subtitle = "Amostra", line= T,
                           var.names = names,
-                          colors = c("red","navy"),
+                          colors = c("grey", "black"),
                           shapes = c("triangle filled", "circle filled"))
 
 g1_2011_2014 <- g1_2011_2014 + 
-                scale_color_manual(name = "Amostra", values = c("red", "navy")) + 
+                scale_color_manual(name = "Amostra", values = c("grey", "black")) + 
                 scale_shape_manual(name = "Amostra", values = c("triangle filled", "circle filled")) + 
                 guides(group = FALSE, size = FALSE, stroke = FALSE) + 
                 xlab("Diferenças médias \n padronizadas")
@@ -736,11 +736,11 @@ g2_2011_2014 <- love.plot(W2, stats = c("m"), drop.distance = TRUE,
                           title = NULL,
                           subtitle = "Amostra", line= T,
                           var.names = names,
-                          colors = c("red","navy"),
+                          colors = c("grey", "black"),
                           shapes = c("triangle filled", "circle filled"))
 
 g2_2011_2014 <- g2_2011_2014 + 
-                scale_color_manual(name = "Amostra", values = c("red", "navy")) + 
+                scale_color_manual(name = "Amostra", values = c("grey", "black")) + 
                 scale_shape_manual(name = "Amostra", values = c("triangle filled", "circle filled")) + 
                 guides(group = FALSE, size = FALSE, stroke = FALSE) + 
                 xlab("Diferenças médias \n padronizadas")
@@ -758,11 +758,11 @@ g3_2011_2014 <- love.plot(W2_placebo, stats = c("m"), drop.distance = TRUE,
                           title = NULL,
                           subtitle = "Amostra", line= T,
                           var.names = names_placebo,
-                          colors = c("red","navy"),
+                          colors = c("grey", "black"),
                           shapes = c("triangle filled", "circle filled"))
 
 g3_2011_2014 <- g3_2011_2014 + 
-                scale_color_manual(name = "Amostra", values = c("red", "navy")) + 
+                scale_color_manual(name = "Amostra", values = c("grey", "black")) + 
                 scale_shape_manual(name = "Amostra", values = c("triangle filled", "circle filled")) + 
                 guides(group = FALSE, size = FALSE, stroke = FALSE) + 
                 xlab("Diferenças médias \n padronizadas")
